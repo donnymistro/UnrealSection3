@@ -3,8 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/TriggerVolume.h"
 #include "Components/ActorComponent.h"
 #include "OpenDoor.generated.h"
+
+// Make the open door event blueprint assignable.
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDoorEvent);
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -22,7 +26,25 @@ protected:
 
 public:	
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void TickComponent(
+		float DeltaTime,
+		ELevelTick TickType, 
+		FActorComponentTickFunction* ThisTickFunction
+	) override;
+	UPROPERTY(BlueprintAssignable)
+	FDoorEvent OnOpen;
+	UPROPERTY(BlueprintAssignable)
+	FDoorEvent OnClose;
 
-		
+private:
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* PressurePlate = nullptr;
+
+	// The owning door.
+	AActor* Owner = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	float TriggerMass = 12.0f;
+
+	float GetTotalMassOfActorsOnPlate();
 };

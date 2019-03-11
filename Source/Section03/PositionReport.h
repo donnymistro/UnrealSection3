@@ -7,6 +7,7 @@
 #include "PositionReport.generated.h"
 
 
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SECTION03_API UPositionReport : public UActorComponent
 {

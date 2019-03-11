@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "DrawDebugHelpers.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "Components/InputComponent.h"
 #include "Grabber.generated.h"
 
 
@@ -24,5 +27,25 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+private:
+	float Reach = 100.0f;
+
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+
+	UInputComponent* Input = nullptr;
+
+	// Ray cast and grab what is in reach.
+	void Grab();
+	// Called when grab is released.
+	void Release();
+	// Find attached physics handle.
+	void FindPhysicsHandleComponent();
+
+	void FindInputComponent();
+	// Return hit for first physics body in reach.
+	FHitResult GetFirstPhysicsBodyInReach() const;
+	// Returns current start of reach line.
+	FVector GetReachLineStart() const;
+	// Returns current end of reach line.
+	FVector GetReachLineEnd() const;
 };

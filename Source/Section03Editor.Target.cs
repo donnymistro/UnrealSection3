@@ -10,5 +10,7 @@ public class Section03EditorTarget : TargetRules
 		Type = TargetType.Editor;
 
 		ExtraModuleNames.AddRange( new string[] { "Section03" } );
-	}
+
+    }
+   
 }
